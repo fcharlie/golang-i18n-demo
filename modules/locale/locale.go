@@ -11,15 +11,12 @@ import (
 //go:embed languages
 var langFS embed.FS
 
-type LangTable map[string]string
-
 var (
-	localeName = defaultLocaleName()
-	langTable  = make(map[string]any)
+	langTable = make(map[string]any)
 )
 
 func DelayInitializeLocale() error {
-	langfile := fmt.Sprint("languages/", localeName, ".toml")
+	langfile := fmt.Sprint("languages/", defaultLocaleName(), ".toml")
 	fd, err := langFS.Open(langfile)
 	if err != nil {
 		return err
@@ -31,8 +28,8 @@ func DelayInitializeLocale() error {
 	return nil
 }
 
-func LocaleName() string {
-	return localeName
+func DefaultLocaleName() string {
+	return defaultLocaleName()
 }
 
 func LoadString(k string) string {
