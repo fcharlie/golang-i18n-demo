@@ -1,3 +1,3 @@
-''=''
-ok="好的"
-cancel="取消"
+"current os '%s'\n" = "当前系统为 '%s'\n"
+ok = "好的"
+cancel = "取消"

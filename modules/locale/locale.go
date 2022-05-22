@@ -3,6 +3,7 @@ package locale
 import (
 	"embed"
 	"fmt"
+	"io"
 
 	"github.com/BurntSushi/toml"
 )
@@ -35,9 +36,17 @@ func LocaleName() string {
 }
 
 func LoadString(k string) string {
-	v := langTable[k]
-	if s, ok := v.(string); ok {
-		return s
+	if v, ok := langTable[k]; ok {
+		if s, ok := v.(string); ok {
+			return s
+		}
 	}
 	return ""
+}
+
+func Fprintf(w io.Writer, format string, a ...any) (n int, err error) {
+	if localeFmt := LoadString(format); len(localeFmt) != 0 {
+		format = localeFmt
+	}
+	return fmt.Fprintf(w, format, a...)
 }
